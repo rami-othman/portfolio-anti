@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/astro/Header.astro';
+import Footer from '../components/astro/Footer.astro';
+---
+
+<BaseLayout title="Resume | Rami">
+  <Header slot="header" />
+  
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 w-full py-16 flex-grow">
+    
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 animate-fade-in-up">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-text-main mb-2 tracking-tight">Resume</h1>
+        <p class="text-text-muted">AI & Data Engineer</p>
+      </div>
+      <button class="mt-4 sm:mt-0 px-4 py-2 bg-surface-elevated hover:bg-surface border border-border text-text-main text-sm font-medium rounded-lg transition-colors flex items-center gap-2" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        Export PDF
+      </button>
+    </div>
+
+    {/* Printable Container */}
+    <div class="print:bg-white print:text-black space-y-12 animate-fade-in-up" style="animation-delay: 0.1s;">
+      
+      {/* Experience Block */}
+      <section>
+        <h2 class="text-2xl font-bold text-text-main border-b border-border pb-2 mb-6">Experience</h2>
+        
+        <div class="space-y-8">
+          {/* Job 1 */}
+          <div>
+            <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
+              <h3 class="text-xl font-bold text-text-main">Senior AI Engineer</h3>
+              <span class="text-text-muted text-sm font-mono">2022 – Present</span>
+            </div>
+            <p class="text-primary-400 font-medium mb-4">TechCorp Inc. &middot; Remote</p>
+            <ul class="list-disc list-outside ml-5 space-y-2 text-text-muted leading-relaxed">
+              <li>Architected and deployed a Retrieval-Augmented Generation (RAG) system handling 50k+ daily queries, reducing support tickets by 30%.</li>
+              <li>Optimized open-source LLMs (Llama 3, Mistral) using vLLM and INT8 quantization, cutting inference costs by 45%.</li>
+              <li>Engineered robust document ingestion pipelines using LangChain and Apache Spark for 10TB of mixed-format data.</li>
+            </ul>
+          </div>
+
+          {/* Job 2 */}
+          <div>
+            <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
+              <h3 class="text-xl font-bold text-text-main">Data Engineer</h3>
+              <span class="text-text-muted text-sm font-mono">2019 – 2022</span>
+            </div>
+            <p class="text-secondary-400 font-medium mb-4">Streamline Analytics &middot; New York, NY</p>
+            <ul class="list-disc list-outside ml-5 space-y-2 text-text-muted leading-relaxed">
+              <li>Designed Kappa-architecture IoT telemetry pipelines using Kafka and Spark Structured Streaming processing 50k events/sec.</li>
+              <li>Migrated legacy cron jobs to an Apache Airflow DAG architecture, improving data pipeline reliability from 92% to 99.9%.</li>
+              <li>Collaborated with Data Scientists to productize predictive maintenance models deployed via FastAPI microservices.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Education Block */}
+      <section>
+        <h2 class="text-2xl font-bold text-text-main border-b border-border pb-2 mb-6">Education</h2>
+        
+        <div>
+          <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
+            <h3 class="text-xl font-bold text-text-main">M.S. Computer Science (Machine Learning)</h3>
+            <span class="text-text-muted text-sm font-mono">2017 – 2019</span>
+          </div>
+          <p class="text-text-muted mb-2">State University</p>
+          <p class="text-text-muted text-sm">Thesis: "Efficient Edge Inference for Real-time Computer Vision Pipelines"</p>
+        </div>
+      </section>
+
+      {/* Skills Block (Simplified) */}
+      <section>
+        <h2 class="text-2xl font-bold text-text-main border-b border-border pb-2 mb-6">Core Skills</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <h4 class="text-text-main font-medium mb-2">Languages</h4>
+            <p class="text-text-muted">Python, SQL, TypeScript, Bash, Scala</p>
+          </div>
+          <div>
+            <h4 class="text-text-main font-medium mb-2">Frameworks & Libs</h4>
+            <p class="text-text-muted">PyTorch, LangChain, Transformers, FastAPI, React</p>
+          </div>
+          <div>
+            <h4 class="text-text-main font-medium mb-2">Data & MLOps</h4>
+            <p class="text-text-muted">Spark, Kafka, Airflow, MLflow, ChromaDB</p>
+          </div>
+          <div>
+            <h4 class="text-text-main font-medium mb-2">Infrastructure</h4>
+            <p class="text-text-muted">Docker, Kubernetes, AWS, GCP, Terraform</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+title: "Real-time Telemetry Pipeline"
+slug: "real-time-telemetry"
+date: "2023-11-05T00:00:00.000Z"
+featured: true
+tags: ["Data Engineering", "Streaming", "GCP"]
+role: "Data Engineer"
+stack: ["Apache Spark", "Kafka", "GCP", "Airflow"]
+summary: "High-throughput streaming pipeline processing IoT sensor data for predictive maintenance."
+problem: "The legacy batch processing system had a 24-hour delay, making it impossible to detect and prevent hardware failures in real-time. Maintenance was reactive."
+approach: "Architected a Kappa-style streaming pipeline. Senors push JSON payloads to Kafka topics. Spark Structured Streaming consumes, cleans, and enriches the data, pushing actionable metrics to a fast caching layer and raw logs to cloud storage."
+results: "Processed 50,000 events/second with sub-second latency. Predictive models downstream were able to alert technicians 2 hours before terminal failure, saving an estimated $1.2M annually in downtime."
+links:
+  github: "https://github.com/rami/telemetry-pipeline"
+  demo: "https://telemetry-demo.example.com"
+---
+
+## Architecture Overview
+
+The system abstracts away the complexity of the sensor network by using a gateway layer.
+
+1. **Ingestion**: Microservices ingest high-frequency UDP packets and publish them to Kafka.
+2. **Processing**: Apache Spark jobs perform windowed aggregations and anomaly detection using an Isolation Forest model.
+3. **Storage**: Hot data sits in Redis for the dashboard. Cold data is dumped to Parquet in GCS via Airflow scheduled tasks.

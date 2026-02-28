@@ -1,0 +1,24 @@
+---
+title: "Local LLM Evaluation Framework"
+slug: "local-llm-eval"
+date: "2024-01-15T00:00:00.000Z"
+featured: true
+tags: ["AI", "LLM", "Evaluation"]
+role: "AI Engineer"
+stack: ["Python", "Transformers", "pytest", "Docker"]
+summary: "An automated framework for evaluating local open-source large language models on custom domain-specific datasets."
+problem: "Evaluating new open-source models rapidly against proprietary datasets required tedious manual scripting and lacked standardized metrics, slowing down iteration cycles for production deployments."
+approach: "Built a containerized pipeline using Hugging Face Transformers that standardizes prompts, runs batched inference across multiple quantizations, and scores outputs using ROUGE, BLEU, and LLM-as-a-judge methodologies."
+results: "Reduced model evaluation time from 3 days to 4 hours. Enabled the team to confidently deploy a fine-tuned Mistral model that cut API costs by 40% while maintaining accuracy."
+links:
+  github: "https://github.com/rami/llm-eval-framework"
+---
+
+## Technical Details
+
+The core of the system is built on a simple plugin architecture. New models can be onboarded by adding a configuration file. The engine spins up a container with the required dependencies (e.g., vLLM or standard HF pipelines), runs the test suite defined in a YAML configuration, and outputs a comprehensive Markdown report.
+
+### Key Components
+- **Test Runner:** Custom pytest plugin to handle asynchronous inference calls.
+- **Metric Calculators:** Wrappers around standard NLP metrics.
+- **Report Generator:** Aggregates scores and builds visualizations of performance regressions.

@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
+
+@layer base {
+  body {
+    @apply bg-background text-text-main antialiased selection:bg-primary-500/30 selection:text-primary-100;
+    font-feature-settings: "rvrn", "liga", "clig", "calt";
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .bg-glass {
+    @apply bg-surface/60 backdrop-blur-md border border-border;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Base styles for mdx content */
+.prose {
+  @apply text-text-muted;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-text-main font-semibold mt-8 mb-4;
+}
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+.prose a {
+  @apply text-primary-400 hover:text-primary-300 underline underline-offset-4 decoration-primary-500/30 hover:decoration-primary-400 transition-colors;
+}
+.prose ul {
+  @apply list-disc list-inside mb-4 space-y-2;
+}
+.prose code {
+  @apply font-mono text-sm bg-surface-elevated px-1.5 py-0.5 rounded text-secondary-200 border border-border;
+}
+.prose pre {
+  @apply p-4 bg-surface-elevated rounded-lg overflow-x-auto border border-border mb-6;
+}
+.prose pre code {
+  @apply bg-transparent px-0 py-0 text-inherit border-none;
+}

@@ -1,0 +1,21 @@
+---
+title: "Industrial Defect Detection"
+slug: "industrial-defect-detection"
+date: "2023-04-20T00:00:00.000Z"
+featured: true
+tags: ["AI", "Computer Vision", "MLOps"]
+role: "Computer Vision Engineer"
+stack: ["PyTorch", "OpenCV", "ONNX", "FastAPI"]
+summary: "End-to-end computer vision system deployed on edge devices to identify manufacturing defects."
+problem: "Manual quality inspection on the assembly line was bottlenecking production by 15% and resulted in a 3% false-negative rate, leading to costly customer returns."
+approach: "Trained a custom YOLOv8 model on an augmented dataset of historical defects. Optimized the model using TensorRT and deployed it via a localized FastAPI service running directly on edge industrial PCs attached to the camera rigs."
+results: "Eliminated the inspection bottleneck entirely. Achieved a 99.4% detection rate, reducing false-negatives to under 0.1%. Paid off the initial hardware investment within 3 months."
+links:
+  github: "https://github.com/rami/cv-defect-detector"
+---
+
+## Model Training & Deployment
+
+We faced significant challenges with varied lighting conditions on the factory floor. We utilized aggressive data augmentation, including synthetic shadow generation and contrast shifting, to make the model robust.
+
+The final model weights, roughly 20MB after INT8 quantization, execute in ~12ms per frame, easily keeping up with the line speed.

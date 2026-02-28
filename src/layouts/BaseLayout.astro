@@ -1,0 +1,64 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = 'AI & Data Engineer Portfolio showcasing projects, articles, and resume.', image = '/og-template.jpg' } = Astro.props;
+const siteUrl = Astro.site ?? Astro.url.origin;
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:image" content={new URL(image, siteUrl)} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, siteUrl)} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <title>{title}</title>
+    
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen flex flex-col pt-16 selection:bg-primary-500/30 selection:text-primary-100 bg-background text-text-main">
+    <slot name="header" />
+    <main class="flex-grow flex flex-col">
+      <slot />
+    </main>
+    <slot name="footer" />
+    
+    <!-- Global scripting for a11y reduced motion check if needed by React -->
+    <script is:inline>
+      // Ensures the local state matches system preferences
+      if (typeof window !== 'undefined') {
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) {
+           document.documentElement.setAttribute('data-reduced-motion', 'true');
+        }
+      }
+    </script>
+  </body>
+</html>

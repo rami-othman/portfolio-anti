@@ -1,0 +1,72 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/resume', label: 'Resume' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+<header class="fixed top-0 inset-x-0 z-50 bg-glass h-16 border-b border-border">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+    <a href="/" class="text-xl font-bold tracking-tight text-text-main hover:text-primary-400 transition-colors">
+      <span class="text-primary-500">_</span>rami
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-6">
+      {navLinks.map((link) => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class={`text-sm font-medium transition-colors hover:text-primary-400 ${
+              isActive ? 'text-primary-400' : 'text-text-muted'
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
+    
+    <!-- Mobile Menu Toggle Button (Animated later if needed, simple for now) -->
+    <button class="md:hidden text-text-muted hover:text-primary-400" aria-label="Menu" id="mobile-menu-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Mobile Nav (Hidden by default) -->
+  <div id="mobile-nav" class="hidden md:hidden absolute top-16 inset-x-0 bg-surface border-b border-border px-4 py-4 space-y-4 shadow-xl">
+    {navLinks.map((link) => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class={`block text-base font-medium transition-colors ${
+              isActive ? 'text-primary-400' : 'text-text-muted'
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+  </div>
+</header>
+
+<script>
+  // Simple mobile menu toggle
+  document.addEventListener('astro:page-load', () => {
+    const btn = document.getElementById('mobile-menu-btn');
+    const nav = document.getElementById('mobile-nav');
+    if (btn && nav) {
+      btn.addEventListener('click', () => {
+        nav.classList.toggle('hidden');
+      });
+    }
+  });
+</script>

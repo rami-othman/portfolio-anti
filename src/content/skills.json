@@ -1,0 +1,28 @@
+{
+    "aiml": [
+        "PyTorch",
+        "TensorFlow",
+        "Transformers",
+        "LangChain"
+    ],
+    "data": [
+        "Pandas",
+        "Spark",
+        "SQL",
+        "Airflow"
+    ],
+    "tools": [
+        "Docker",
+        "Git",
+        "Linux",
+        "FastAPI",
+        "React",
+        "TypeScript",
+        "Tailwind CSS"
+    ],
+    "cloud": [
+        "AWS",
+        "GCP",
+        "Vercel"
+    ]
+}

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/astro/Header.astro';
+import Footer from '../../components/astro/Footer.astro';
+import ProjectsFilter from '../../components/react/ProjectsFilter';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+---
+
+<BaseLayout 
+  title="Projects | Rami - AI & Data Engineer" 
+  description="Explore my portfolio of AI, Data Engineering, and Full-Stack projects."
+>
+  <Header slot="header" />
+  
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full py-12 flex-grow">
+    <div class="mb-12 animate-fade-in-up">
+      <h1 class="text-3xl sm:text-4xl font-bold text-text-main mb-4 tracking-tight">Project Portfolio</h1>
+      <p class="text-xl text-text-muted max-w-2xl">
+        Case studies on building intelligent systems, optimizing models, and processing data at scale.
+      </p>
+    </div>
+
+    <!-- Interactive React Island for filtering -->
+    <ProjectsFilter client:load initialProjects={allProjects} />
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

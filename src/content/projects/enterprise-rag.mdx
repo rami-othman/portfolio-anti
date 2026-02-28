@@ -1,0 +1,25 @@
+---
+title: "Enterprise Knowledge Base RAG"
+slug: "enterprise-kb-rag"
+date: "2024-05-10T00:00:00.000Z"
+featured: true
+tags: ["AI", "RAG", "LLM", "Data Engineering"]
+role: "AI/Data Engineer"
+stack: ["LangChain", "ChromaDB", "FastAPI", "Next.js"]
+summary: "Semantic search and Q&A system indexing over 50,000 internal confluence pages and PDF documentation."
+problem: "Engineering and Sales teams were spending an average of 4 hours a week simply searching for up-to-date internal documentation across disparate, siloed systems."
+approach: "Built a daily ingestion pipeline that scrapes Confluence and internal drives. Text is chunked contextually and embedded using specialized semantic models. A Retrieval-Augmented Generation (RAG) agent interfaces with a conversational UI to provide cited answers."
+results: "Reduced average search time by 80%. Post-launch surveys indicated a 35% boost in cross-team knowledge sharing and significantly reduced redundant technical questions."
+links:
+  github: "https://github.com/rami/enterprise-rag"
+  demo: "https://rag-demo.example.com"
+---
+
+## System Architecture
+
+The most critical component of this system is the data ingestion pipeline. Garbage in, garbage out.
+
+1.  **Document Loaders:** Custom crawlers handle authentication and pull down raw HTML/PDFs.
+2.  **Chunking Strategy:** Instead of fixed-size chunks, we parse the document structure (headers, paragraphs) to keep contextual boundaries intact.
+3.  **Vector Store:** ChromaDB handles the billions of vector dimensions efficiently, allowing for sub-100ms similarity searches.
+4.  **Generation:** The top-K retrieved documents are injected into the prompt context for the LLM to synthesize an answer and provide hard citations.

@@ -1,0 +1,144 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/astro/Header.astro';
+import Footer from '../../components/astro/Footer.astro';
+
+export async function getStaticPaths() {
+  const projectEntries = await getCollection('projects');
+  return projectEntries.map(entry => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const techArray = entry.data.stack;
+const links = entry.data.links || {};
+
+// Format date
+const dateFormatted = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  year: 'numeric',
+}).format(entry.data.date);
+---
+
+<BaseLayout 
+  title={`${entry.data.title} | Rami - Portfolio`}
+  description={entry.data.summary}
+>
+  <Header slot="header" />
+  
+  <article class="max-w-6xl mx-auto px-4 sm:px-6 w-full py-12 flex-grow">
+    
+    <!-- Hero / Header Section -->
+    <header class="mb-12 animate-fade-in-up">
+      <div class="mb-4">
+        <a href="/projects" class="text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1 text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Back to Projects
+        </a>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-text-main mb-6 tracking-tight text-balance">
+        {entry.data.title}
+      </h1>
+      
+      <p class="text-xl text-text-muted max-w-3xl leading-relaxed">
+        {entry.data.summary}
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- Main Content Block -->
+      <div class="lg:col-span-8 space-y-12 animate-fade-in-up" style="animation-delay: 0.1s;">
+        
+        <section class="bg-surface-elevated rounded-2xl p-6 sm:p-8 border border-border">
+          <h2 class="text-2xl font-bold text-text-main mb-4 flex items-center gap-2">
+            <span class="text-secondary-500">_</span> The Problem
+          </h2>
+          <p class="text-text-muted leading-relaxed whitespace-pre-line">{entry.data.problem}</p>
+        </section>
+
+        <section class="bg-surface-elevated rounded-2xl p-6 sm:p-8 border border-border">
+          <h2 class="text-2xl font-bold text-text-main mb-4 flex items-center gap-2">
+            <span class="text-primary-500">_</span> The Approach
+          </h2>
+          <p class="text-text-muted leading-relaxed whitespace-pre-line">{entry.data.approach}</p>
+        </section>
+
+        <section class="bg-surface-elevated rounded-2xl p-6 sm:p-8 border border-border border-l-4 border-l-primary-500 shadow-lg shadow-primary-900/10">
+          <h2 class="text-2xl font-bold text-text-main mb-4">Results & Impact</h2>
+          <p class="text-text-main font-medium leading-relaxed whitespace-pre-line">{entry.data.results}</p>
+        </section>
+
+        {/* MDX Content rendered cleanly */}
+        <section class="prose prose-invert max-w-none pt-8 border-t border-border">
+          <Content />
+        </section>
+      </div>
+
+      <!-- Scannable Meta Sidebar -->
+      <aside class="lg:col-span-4 space-y-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+        
+        <!-- Recruiter / Quick Scan Card -->
+        <div class="sticky top-24 bg-surface-elevated rounded-xl border border-border p-6 shadow-xl">
+          <h3 class="text-lg font-bold text-text-main mb-6 border-b border-border pb-2">Project Details</h3>
+          
+          <dl class="space-y-4">
+            <div>
+              <dt class="text-sm font-medium text-text-faint uppercase tracking-wider mb-1">Role</dt>
+              <dd class="text-text-main font-medium">{entry.data.role}</dd>
+            </div>
+            
+            <div>
+              <dt class="text-sm font-medium text-text-faint uppercase tracking-wider mb-1">Timeline</dt>
+              <dd class="text-text-muted">{dateFormatted}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-text-faint uppercase tracking-wider mb-2">Tech Stack</dt>
+              <dd class="flex flex-wrap gap-2">
+                {techArray.map((tech: string) => (
+                  <span class="inline-flex items-center rounded bg-surface px-2.5 py-1 text-xs font-medium text-primary-100 ring-1 ring-inset ring-primary-500/20">
+                    {tech}
+                  </span>
+                ))}
+              </dd>
+            </div>
+
+            {Object.keys(links).length > 0 && (
+              <div class="pt-4 border-t border-border/50">
+                <dt class="text-sm font-medium text-text-faint uppercase tracking-wider mb-3">Links</dt>
+                <dd class="flex flex-col gap-3">
+                  {links.github && (
+                    <a href={links.github} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full px-4 py-2 bg-surface hover:bg-surface-elevated border border-border rounded-lg text-text-main hover:text-primary-400 transition-colors text-sm font-medium">
+                      GitHub Repo
+                    </a>
+                  )}
+                  {links.demo && (
+                    <a href={links.demo} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white shadow-lg shadow-primary-900/20 rounded-lg transition-colors text-sm font-medium">
+                      Live Demo
+                    </a>
+                  )}
+                  {links.paper && (
+                    <a href={links.paper} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full px-4 py-2 bg-surface hover:bg-surface-elevated border border-border rounded-lg text-text-main hover:text-primary-400 transition-colors text-sm font-medium">
+                      Read Paper
+                    </a>
+                  )}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>
